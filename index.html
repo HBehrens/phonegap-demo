@@ -7,35 +7,30 @@
  
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" charset="utf-8">
-    // Wait for PhoneGap to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
  
-    // PhoneGap is ready
-    //
+	// http://docs.phonegap.com/phonegap_contacts_contacts.md.html#Contact_ios_quirks
     function doSearch() {
-		console.log("findme");
-        // find all contacts with 'Bob' in any name field
+		console.log("findme?");
         var options = new ContactFindOptions();
-		console.log("findme2");
-        options.filter="Bob"; 
+        options.filter="Hei"; 
+		options.multiple = true;
         var fields = ["displayName", "name"];
         navigator.contacts.find(fields, onSuccess, onError, options);
     }
  
-    // onSuccess: Get a snapshot of the current contacts
-    //
     function onSuccess(contacts) {
 		console.log("success!");
+		console.log(contacts);
+		document.body.innerHTML += "<ul>";
         for (var i=0; i<contacts.length; i++) {
 			console.log(contacts[i]);
-            console.log("Name = " + contacts[i].displayName);
+			var name = contacts[i].displayName;
+			document.body.innerHTML += "<li>"+name+"</li>"
+            console.log("Name = " + name);
         }
-		
+		document.body.innerHTML += "</ul>";
     }
  
-    // onError: Failed to get the contacts
-    //
     function onError(contactError) {
         alert('onError!');
     }
@@ -43,6 +38,6 @@
     </script>
   </head>
   <body>
-    <h1 onclick="doSearch()">Example</h1>
+    <h1 onclick="doSearch()">Contacts</h1>
   </body>
 </html>
